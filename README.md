@@ -15,8 +15,8 @@ Panoramic stitching is an early success of computer vision. Matthew Brown and Da
 
 In this programming assignment, we will match SIFT keypoints from a pair (or multiple) images to build a single panoramic image. This will involve several tasks:
 
-* Detect SIFT points and extract SIFT descriptor for each keypoint in an image using vlfeat.
-  (extra credit) Detect Corner points (Hw2) and extract SIFT descriptor (vlfeat) ....
+* Detect SIFT points and extract SIFT descriptor for each keypoint in an image using vlfeat, or
+  (extra credit) detect Corner points (Hw2) and extract SIFT descriptor (vlfeat).
 
 
 * Compare two sets of SIFT descriptors coming from two different images and find matching keypoints (`SIFTSimpleMatcher.m`).
@@ -48,10 +48,10 @@ Now we give details of each step:
 ### Get SIFT points and descriptors
 Download [VLFeat 0.9.17 binary package](http://www.vlfeat.org/download.html). We are only using the `vl_sift` or `vl_siftdescriptor` function. VL Feat Matlab reference: [http://www.vlfeat.org/matlab/matlab.html](http://www.vlfeat.org/matlab/matlab.html)
 
-For using corner detector (Hw2) and `vl_siftdescriptor`, you need to implement `my_sift.m`
+(extra credit) For using corner detector (Hw2) and `vl_siftdescriptor`, you need to implement `my_sift.m`.
 
 ### Matching SIFT Descriptors 
-Edit `SIFTSimpleMatcher.m` to calculate the Euclidean distance between a given SIFT descriptor from im- age 1 and all SIFT descriptors from image 2. Then use this to determine if there’s a good match: if the distance to the closest vector is significantly (by a factor which is given) smaller than the distance to the second-closest, we call it a match. The output of the function is an array where each row holds the indices of one pair of matching descriptors.
+Edit `SIFTSimpleMatcher.m` to calculate the Euclidean distance between a given SIFT descriptor from image 1 and all SIFT descriptors from image 2. Then use this to determine if there’s a good match: if the distance to the closest vector is significantly (by a factor which is given) smaller than the distance to the second-closest, we call it a match. The output of the function is an array where each row holds the indices of one pair of matching descriptors.
 
 Run the provided `EvaluateSIFTMatcher.m` to check your implementation. You can also use `PlotMatch.m` to visualize the matches.
 
