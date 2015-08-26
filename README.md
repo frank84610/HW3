@@ -13,9 +13,10 @@
 ##Overview
 Panoramic stitching is an early success of computer vision. Matthew Brown and David G. Lowe published a famous [panoramic image stitching paper](http://www.cs.ubc.ca/~lowe/papers/07brown.pdf) in 2007. Since then, automatic panorama stitching technology has been widely adopted in many applications such as Google Street View, panorama photos on smartphones, and stitching software such as [Photosynth](http://photosynth.net/) and [AutoStitch](http://cs.bath.ac.uk/brown/autostitch/autostitch.html).
 
-In this programming assignment, we will match SIFT keypoints from multiple images to build a single panoramic image. This will involve several tasks:
+In this programming assignment, we will match SIFT keypoints from a pair (or multiple) images to build a single panoramic image. This will involve several tasks:
 
 * Detect SIFT points and extract SIFT descriptor for each keypoint in an image using vlfeat.
+  (extra credit) Detect Corner points (Hw2) and extract SIFT descriptor (vlfeat) ....
 
 
 * Compare two sets of SIFT descriptors coming from two different images and find matching keypoints (`SIFTSimpleMatcher.m`).
@@ -45,7 +46,9 @@ In this programming assignment, we will match SIFT keypoints from multiple image
 Now we give details of each step:
 
 ### Get SIFT points and descriptors
-Download [VLFeat 0.9.17 binary package](http://www.vlfeat.org/download.html). We are only using the `vl_sift` function. VL Feat Matlab reference: [http://www.vlfeat.org/matlab/matlab.html](http://www.vlfeat.org/matlab/matlab.html)
+Download [VLFeat 0.9.17 binary package](http://www.vlfeat.org/download.html). We are only using the `vl_sift` or `vl_siftdescriptor` function. VL Feat Matlab reference: [http://www.vlfeat.org/matlab/matlab.html](http://www.vlfeat.org/matlab/matlab.html)
+
+For using corner detector (Hw2) and `vl_siftdescriptor`, you need to implement `my_sift.m`
 
 ### Matching SIFT Descriptors 
 Edit `SIFTSimpleMatcher.m` to calculate the Euclidean distance between a given SIFT descriptor from im- age 1 and all SIFT descriptors from image 2. Then use this to determine if there’s a good match: if the distance to the closest vector is significantly (by a factor which is given) smaller than the distance to the second-closest, we call it a match. The output of the function is an array where each row holds the indices of one pair of matching descriptors.
@@ -98,15 +101,15 @@ whenever you want to compute matrix inverse. pinv is more robust than inv.
 
 After finishing this part, you can check your code by running `StitchTester.m`. 
 
-#### Stitching unordered sequence of images (extra credit)
+#### Stitching unordered sequence of images (just for your interest!)
 Given an unordered set of m images (e.g., Rainier*.jpg), how can we find the 1. reference image, and 2 the most robust transformation to the reference image (bundle adjustment).
 
-Hint: described in [panoramic image stitching paper](http://www.cs.ubc.ca/~lowe/papers/07brown.pdf). You are allow to use 3rd party code as long as you mention it in your report.
+Hint: described in [panoramic image stitching paper](http://www.cs.ubc.ca/~lowe/papers/07brown.pdf). In partice, you [ceres-solver](http://ceres-solver.org/)
 
 ## Extra Points
-* +2 pts: If you make your code publicly available.
-* +2 pts: If you comment on pull request from students who fork the homework.
-* +5 pts: If you Stitching unordered sequence of images.
+* +1 pts: If you make your code publicly available.
+* +1 pts: If you comment on pull request from students who fork the homework.
+* +2 pts: If you implement my_sift.m.
 * +2 pts: Impressive panorama examples.
 
 ## Writeup
@@ -118,7 +121,7 @@ For this project, and all other projects, you must do a project report in result
 * +20 pts: Working implementation of RANSAC
 * +30 pts: Working implementation of stitching sequence of images
 * +20 pts: Writeup with several examples of panorama
-* +10 pts: Extra credit (up to ten points)
+* +5 pts: Extra credit (up to ten points)
 * -5*n pts: Lose 5 points for every time (after the first) you do not follow the instructions for the hand in format
 
 ## Get start & hand in
