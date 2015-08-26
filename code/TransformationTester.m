@@ -1,18 +1,31 @@
 %% Clear all
 clc; close all; clc;
 
+%% use vl_sift or HW2 corner detection+ sift descriptor
+vlSIFTFlag = true
+
 %% Load image
 img1 = imread('./data/uttower1.jpg');
 img2 = imread('./data/uttower2.jpg');
 
 %% Feature detection
 I = single(rgb2gray(img1));
-[f,d] = vl_sift(I) ;
+if vlSIFTFlag
+  [f,d] = vl_sift(I);
+else
+  %% use your own my_sift: HW2 corner detection+ sift descriptor
+  [f,d] = my_sift(I)  
+end
 pointsInImage1 = double(f(1:2,:)');
 desc1 = double(d');
 
 I = single(rgb2gray(img2));
-[f,d] = vl_sift(I) ;
+if vlSIFTFlag
+  [f,d] = vl_sift(I);
+else
+  %% use your own my_sift: HW2 corner detection+ sift descriptor
+  [f,d] = my_sift(I)  
+end
 pointsInImage2 = double(f(1:2,:)');
 desc2 = double(d');
 
