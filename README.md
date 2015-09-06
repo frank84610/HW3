@@ -4,7 +4,7 @@
 (Panorama image of Mt. Rainer in Washington USA.)
 </center>
 
-# Project 2: Panorama Stitching
+# Project 3: Panorama Stitching
 
 ## Brief
 * Due: 10/23 at 8am
