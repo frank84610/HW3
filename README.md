@@ -7,7 +7,7 @@
 # Project 2: Panorama Stitching
 
 ## Brief
-* Due: Oct. 30, 11:59pm.
+* Due: 10/23 at 8am
 * Required files: results/index.md, and code/
 
 ##Overview
