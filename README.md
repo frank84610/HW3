@@ -61,6 +61,8 @@ Hints: Remember, Euclidean distance between vectors \\(a\in R^n\\) and \\(b\in R
 \\]
 You can calculate this entirely with matrix math if you use the `repmat` command. 
 
+== Demo EvaluateSIFTMatcher.m in class required ==
+
 
 ### Fitting the Transformation Matrix
 We now have a list of matched keypoints across the two images! We will use this to find a transformation
