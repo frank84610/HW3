@@ -113,6 +113,7 @@ Hint: described in [panoramic image stitching paper](http://www.cs.ubc.ca/~lowe/
 * +1 pts: If you comment on pull request from students who fork the homework.
 * +2 pts: If you implement my_sift.m.
 * +2 pts: Impressive panorama examples.
+* +5 pts: in-class demo.
 
 ## Writeup
 For this project, and all other projects, you must do a project report in results folder using [Markdown](https://help.github.com/articles/markdown-basics). We provide you with a placeholder [index.md](./results/index.md) document which you can edit. In the report you will describe your algorithm and any decisions you made to write your algorithm a particular way. Then, you will describe how to run your code and if your code depended on other packages. Finally, you will show and discuss the results of your algorithm. In the case of this project, show the results of matches and show the panoramas. Also, discuss anything extra you did. Feel free to add any other information you feel is relevant.
