@@ -26,17 +26,16 @@ function match = SIFTSimpleMatcher(descriptor1, descriptor2, thresh)
     end
 
     match = [];
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                              %
-%                                YOUR CODE HERE:                               %
-%                                                                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                              %
-%                                 END YOUR CODE                                %
-%                                                                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    num1=size(descriptor1,1);
+    num2=size(descriptor2,1);
+    
+    for i=1:num1
+        d1_tmp=repmat(descriptor1(i,:), num2, 1);
+        distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
+        distance_tmp=sort(distance);
+        if distance_tmp(1)<thresh*distance_tmp(2)
+            match=[match; i, find(distance==distance_tmp(1))];
+        end
+    end
 end

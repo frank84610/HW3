@@ -5,8 +5,8 @@ clc; close all; clc;
 vlSIFTFlag = true
 
 %% Load image
-img1 = imread('./data/uttower1.jpg');
-img2 = imread('./data/uttower2.jpg');
+img1 = imread('../data/uttower1.jpg');
+img2 = imread('../data/uttower2.jpg');
 
 %% Feature detection
 I = single(rgb2gray(img1));

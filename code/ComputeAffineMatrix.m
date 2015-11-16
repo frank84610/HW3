@@ -30,18 +30,7 @@ function H = ComputeAffineMatrix( Pt1, Pt2 )
     % above, to yield P1'*H'=P2'. Then MATLAB can solve for H', and we can
     % transpose the result to produce H.
     
-    H = [];
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                              %
-%                                YOUR CODE HERE:                               %
-%        Use MATLAB's "A\b" syntax to solve for H_transpose as discussed       %
-%                     above, then convert it to the final H                    %
-%                                                                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%       END OF YOUR CODE                                              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    H = (P1'\P2')';
     
     % Sometimes numerical issues cause least-squares to produce a bottom
     % row which is not exactly [0 0 1], which confuses some of the later
