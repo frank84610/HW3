@@ -21,70 +21,23 @@ In this programming assignment, we will match SIFT keypoints from multiple image
 * Stitch multiple images together under a simplified case of real-world scenario ('MultipleStitch.m').
 
 ## Implementation
-First set the parameters for corner detection and the filters for image filtering, dx is the gradient filter for x-axis, dy is the gradient filter for y-axis, and g is the gaussian filter
+1.Matching SIFT Descriptors (SIFTSimpleMatcher.m)
+
+First get the size of descriptors
 	
-    	sigma=2;
-    	n_x_sigma = 6;
-    	alpha = 0.04;
-    	Thrshold=20;  
-    	r=6; 
+	num1=size(descriptor1,1);
+	num2=size(descriptor2,1);
 	
-    	dx = [-1 0 1; -1 0 1; -1 0 1];
-    	dy = dx'; 
-    	g = fspecial('gaussian',max(1,fix(2*n_x_sigma*sigma)), sigma);
-    		
-Then load the original picture and change it into grayscale
+Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to get `d1_tmp`, which has same number of rows as descriptor2, with data in every rows are same as row"i" in descriptor1, then calculate the distance by `distance=sqrt(sum((d1_tmp-descriptor2).^2,2))`, then sort the `distance` and if the smallest value in distance is smaller than threshold(here is 0.7)*the next smallest distance, then save its information into `match` array.
 
-<img src="../data/Im.jpg" width="50%"/>
-    	
-    	frame = imread('data/Im.jpg');
-    	I = double(frame);
-    	I_gray = I(:,:,1)* 0.299+I(:,:,2)* 0.587+I(:,:,1)* 0.114;
-    		
-Calculate Ix and Iy by using function `imfilter` and filter `dx`, `dy`
-    	
-    	Ix=imfilter(I_gray, dx);
-    	Iy=imfilter(I_gray, dy);
-    	
-Get the components of second moment matrix      
-### M = [[Ix2 Ixy];[Iyx Iy2]]
-Because that Ix2,Iy2,Ixy should be Gaussian smoothed, so use the function `imfilter` again with the gaussian filter after calculation
-    	
-    	Ix2=imfilter((Ix.*Ix),g);
-    	Iy2=imfilter((Iy.*Iy),g);
-    	Ixy=imfilter((Ix.*Iy),g);
-
-By using `imagesc`, we can see Ixy
-
-<img src="../results/Ixy.jpg"  width="50%"/>
-	
-Then get the corner response function 
-### R = det(M)-alpha*trace(M)^2
-And map it to 0~1000
-
-    	R = (Ix2.*Iy2-Ixy.^2)-alpha*((Ix2+Iy2).^2) ;
-    	R=(1000/max(max(R)))*R;
-    	
-Then use the function `ordfilt2` to complment a maxfilter, here the function B = ordfilt2(A,order,domain) will replace each element in A by the "order"th element in the sorted set of neighbors specified by the nonzero elements in domain.
-Because we want to implement a maxfilter, so we replace each element by the biggest orderth "sze^2" in the domain sze*sze
-
-	MX=ordfilt2(R,sze^2,ones(sze));
-	
-Then we want to find the corner in the original picture, the corner will be the local max that bigger than threshold in R, so we find local max points by (R==MX) and find the points that bigger than threshold by (R>Thrshold), combine them together will get RBinary
-
-	RBinary=(R==MX) & (R>Thrshold);
-
-And by the information of RBinary, we can plot the corners on the original figure, finally get the corner detected picture
-
-<img src="../results/corner1.jpg" width="50%"/>
-
-
-## Installation
-1. Download and unpack [VLFeat binary package](http://www.vlfeat.org/download.html)
-
-2. Enter `run('VLFEATROOT/toolbox/vl_setup')` in MATLAB command line
-
-3. Download the code and open `StitchTester.m` , set the input image `('../data/yosemite*.jpg') ` and output path `'../results/yosemite.jpg'`then run the code .
+    for i=1:num1
+        d1_tmp=repmat(descriptor1(i,:), num2, 1);
+        distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
+        distance_tmp=sort(distance);
+        if distance_tmp(1)<thresh*distance_tmp(2)
+            match=[match; i, find(distance==distance_tmp(1))];
+        end
+    end
 	
 ## Results
 
