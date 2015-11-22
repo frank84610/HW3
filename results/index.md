@@ -39,6 +39,7 @@ Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to 
 		end
 	end
 
+
 2. Fitting the Transformation Matrix (ComputeAffineMatrix.m)
 
 Here we want to get the transformation matrix `H` (H*P1=P2) that maps an image 1 point to the corresponding coordinates in image 2. First,convert the input points to homogeneous coordintes.
@@ -49,6 +50,7 @@ Here we want to get the transformation matrix `H` (H*P1=P2) that maps an image 1
 Then by using `\`, we can get the transformation matrix `H`.
 
 	H = (P1'\P2')';
+
 
 3. RANSAC (RANSACFit.m)  
 
@@ -63,6 +65,7 @@ Then get the size of `match` array, and convert the points which match to `pt2` 
 	N = size(match,1);
 	pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
 	dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
+
 	
 4. Stitching Multiple Images (MultipleStitch.m)  
 
