@@ -153,8 +153,8 @@ And by the information of RBinary, we can plot the corners on the original figur
 <tr>
 <td>
 <img src="../data/desktop.jpg" width="30%"/>
-<img src="../data/desktop2.png" width="30%"/>
-<img src="../data/desktop3.png" width="30%"/>
+<img src="../data/desktop2.jpg" width="30%"/>
+<img src="../data/desktop3.jpg" width="30%"/>
 <img src="../results/desktop.jpg" width="80%"/>
 </td>
 </tr>
