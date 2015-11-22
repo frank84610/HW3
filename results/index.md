@@ -23,71 +23,68 @@ In this programming assignment, we will match SIFT keypoints from multiple image
 ## Implementation
 1. Matching SIFT Descriptors (SIFTSimpleMatcher.m)
 
-First get the size of descriptors
+	First get the size of descriptors
 	
-	num1=size(descriptor1,1);
-	num2=size(descriptor2,1);
+		num1=size(descriptor1,1);
+		num2=size(descriptor2,1);
 	
-Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to get `d1_tmp`, which has same number of rows as descriptor2, with data in every rows are same as row"i" in descriptor1, then calculate the distance by `distance=sqrt(sum((d1_tmp-descriptor2).^2,2))`. And then sort the `distance` , if the smallest value in `distance` is smaller than threshold(here is 0.7)*the next smallest value, save its information into `match` array.
+	Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to get `d1_tmp`, which has same number of rows as descriptor2, with data in every rows are same as row"i" in descriptor1, then calculate the distance by `distance=sqrt(sum((d1_tmp-descriptor2).^2,2))`. And then sort the `distance` , if the smallest value in `distance` is smaller than threshold(here is 0.7)*the next smallest value, save its information into `match` array.
 
-	for i=1:num1
-		d1_tmp=repmat(descriptor1(i,:), num2, 1);
-		distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
-		distance_tmp=sort(distance);
-		if distance_tmp(1)<thresh*distance_tmp(2)
-		match=[match; i, find(distance==distance_tmp(1))];
+		for i=1:num1
+			d1_tmp=repmat(descriptor1(i,:), num2, 1);
+			distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
+			distance_tmp=sort(distance);
+			if distance_tmp(1)<thresh*distance_tmp(2)
+			match=[match; i, find(distance==distance_tmp(1))];
+			end
 		end
-	end
-
 
 2. Fitting the Transformation Matrix (ComputeAffineMatrix.m)
 
-Here we want to get the transformation matrix `H` (H*P1=P2) that maps an image 1 point to the corresponding coordinates in image 2. First,convert the input points to homogeneous coordintes.
+	Here we want to get the transformation matrix `H` (H*P1=P2) that maps an image 1 point to the corresponding coordinates in image 2. First,convert the input points to homogeneous coordintes.
 
-	P1 = [Pt1';ones(1,N)];
-	P2 = [Pt2';ones(1,N)];
+		P1 = [Pt1';ones(1,N)];
+		P2 = [Pt2';ones(1,N)];
 
-Then by using `\`, we can get the transformation matrix `H`.
+	Then by using `\`, we can get the transformation matrix `H`.
 
-	H = (P1'\P2')';
-
+		H = (P1'\P2')';
 
 3. RANSAC (RANSACFit.m)  
 
-Instead of directly feeding all of SIFT keypoint matches into `ComputeAffineMatrix.m`, we will use RANSAC (“RANdom SAmple Consensus”) to select only “inliers” to use to compute the transformation matrix.
+	Instead of directly feeding all of SIFT keypoint matches into `ComputeAffineMatrix.m`, we will use RANSAC (“RANdom SAmple Consensus”) to select only “inliers” to use to compute the transformation matrix.
 
-Here we only need to finish the `ComputeError` function, first initialize the `dists` array.
+	Here we only need to finish the `ComputeError` function, first initialize the `dists` array.
 
-	dists = zeros(size(match,1),1);
+		dists = zeros(size(match,1),1);
 
-Then get the size of `match` array, and convert the points which match to `pt2` in `pt1` by using the transformation matrix `H`, and we can calculate the Euclidean distance.
+	Then get the size of `match` array, and convert the points which match to `pt2` in `pt1` by using the transformation matrix `H`, and we can calculate the Euclidean distance.
 
-	N = size(match,1);
-	pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
-	dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
-
+		N = size(match,1);
+		pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
+		dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
 	
 4. Stitching Multiple Images (MultipleStitch.m)  
 
-Finally, we want to stich multiple images together, and we only need to finish the `makeTransformToReferenceFrame` function in `MultipleStitch.m`.
+	Finally, we want to stich multiple images together, and we only need to finish the `makeTransformToReferenceFrame` function in `MultipleStitch.m`.
 
-Here,first we make a 3*3 Identity matrix.
+	Here,first we make a 3*3 Identity matrix.
 
-	T=eye(3);
+		T=eye(3);
 
-Then, when (refFrameIndex> currentFrameIndex), get new transformation matrix by times the two matrix `i_To_iPlusOne_Transform{currentFrameIndex}` and `T` together , and add 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
+	Then, when (refFrameIndex> currentFrameIndex), get new transformation matrix by times the two matrix `i_To_iPlusOne_Transform{currentFrameIndex}` and `T` together , and add 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
 
-	while refFrameIndex> currentFrameIndex
-    		T=i_To_iPlusOne_Transform{currentFrameIndex}*T;
-    		currentFrameIndex=currentFrameIndex+1;
-	end
+		while refFrameIndex> currentFrameIndex
+    			T=i_To_iPlusOne_Transform{currentFrameIndex}*T;
+    			currentFrameIndex=currentFrameIndex+1;
+		end
 	
-And when (currentFrameIndex> refFrameIndex), get new transformation matrix by times the two matrix `pinv(i_To_iPlusOne_Transform{currentFrameIndex})` (Moore-Penrose pseudoinverse of `i_To_iPlusOne_Transform{currentFrameIndex}`)and `T` together , and minus 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
+	And when (currentFrameIndex> refFrameIndex), get new transformation matrix by times the two matrix `pinv(i_To_iPlusOne_Transform{currentFrameIndex})` (Moore-Penrose pseudoinverse of `i_To_iPlusOne_Transform{currentFrameIndex}`)and `T` together , and minus 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
 
-	while currentFrameIndex> refFrameIndex
-		T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1})*T;
-		currentFrameIndex=currentFrameIndex-1;
-	end
+		while currentFrameIndex> refFrameIndex
+			T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1})*T;
+			currentFrameIndex=currentFrameIndex-1;
+		end
 
 
 ## Results
