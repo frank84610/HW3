@@ -124,11 +124,11 @@ And by the information of RBinary, we can plot the corners on the original figur
 <table border=4>
 <tr>
 <td>
-<img src="../data/yosemite1.jpg" width="30%"/>
-<img src="../data/yosemite2.jpg" width="30%"/>
-<img src="../data/yosemite3.jpg" width="30%"/>
-<img src="../data/yosemite4.jpg" width="30%"/>
-<img src="../results/yosemite.jpg" width="80%"/>
+<img src="../data/yosemite1.jpg" width="40%"/>
+<img src="../data/yosemite2.jpg" width="40%"/>
+<img src="../data/yosemite3.jpg" width="40%"/>
+<img src="../data/yosemite4.jpg" width="40%"/>
+<img src="../results/yosemite.jpg" width="100%"/>
 </td>
 </tr>
 </table>
@@ -163,13 +163,13 @@ And by the information of RBinary, we can plot the corners on the original figur
 <table border=7>
 <tr>
 <td>
-<img src="../data/landscape1.jpg width="30%"/>
-<img src="../data/landscape2.jpg width="30%"/>
-<img src="../data/landscape3.jpg width="30%"/>
-<img src="../data/landscape4.jpg width="30%"/>
-<img src="../data/landscape5.jpg width="30%"/>
-<img src="../data/landscape6.jpg width="30%"/>
-<img src="../data/landscape7.jpg width="30%"/>
+<img src="../data/landscape1.jpg" width="30%"/>
+<img src="../data/landscape2.jpg" width="30%"/>
+<img src="../data/landscape3.jpg" width="30%"/>
+<img src="../data/landscape4.jpg" width="30%"/>
+<img src="../data/landscape5.jpg" width="30%"/>
+<img src="../data/landscape6.jpg" width="30%"/>
+<img src="../data/landscape7.jpg" width="30%"/>
 <img src="../results/landscape.jpg" width="100%"/>
 </td>
 </tr>
