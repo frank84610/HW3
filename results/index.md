@@ -41,7 +41,7 @@ Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to 
 
 2. Fitting the Transformation Matrix (ComputeAffineMatrix.m)
 
-First,convert the input points to homogeneous coordintes.
+Here we want to get the transformation matrix `H` (H*P1=P2) that maps an image 1 point to the corresponding coordinates in image 2. First,convert the input points to homogeneous coordintes.
 
 	P1 = [Pt1';ones(1,N)];
 	P2 = [Pt2';ones(1,N)];
@@ -50,8 +50,43 @@ Then by using `\`, we can get the transformation matrix `H`.
 
 	H = (P1'\P2')';
 
-3. RANSAC (RANSACFit.m)
+3. RANSAC (RANSACFit.m)  
+
+Instead of directly feeding all of SIFT keypoint matches into `ComputeAffineMatrix.m`, we will use RANSAC (“RANdom SAmple Consensus”) to select only “inliers” to use to compute the transformation matrix.
+
+Here we only need to finish the `ComputeError` function, first initialize the `dists` array.
+
+	dists = zeros(size(match,1),1);
+
+Then get the size of `match` array, and convert the points which match to `pt2` in `pt1` by using the transformation matrix `H`, and we can calculate the Euclidean distance.
+
+	N = size(match,1);
+	pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
+	dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
 	
+4. Stitching Multiple Images (MultipleStitch.m)  
+
+Finally, we want to stich multiple images together, and we only need to finish the `makeTransformToReferenceFrame` function in `MultipleStitch.m`.
+
+Here,first we make a 3*3 Identity matrix.
+
+	T=eye(3);
+
+Then, when (refFrameIndex> currentFrameIndex), get new transformation matrix by times the two matrix `i_To_iPlusOne_Transform{currentFrameIndex}` and `T` together , and add 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
+
+	while refFrameIndex> currentFrameIndex
+    		T=i_To_iPlusOne_Transform{currentFrameIndex}*T;
+    		currentFrameIndex=currentFrameIndex+1;
+	end
+	
+And when (currentFrameIndex> refFrameIndex), get new transformation matrix by times the two matrix `pinv(i_To_iPlusOne_Transform{currentFrameIndex})` (Moore-Penrose pseudoinverse of `i_To_iPlusOne_Transform{currentFrameIndex}`)and `T` together , and minus 1 to currentFrameIndex until refFrameIndex=currentFrameIndex.
+
+	while currentFrameIndex> refFrameIndex
+		T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1})*T;
+		currentFrameIndex=currentFrameIndex-1;
+	end
+
+
 ## Results
 
 <table border=1>
