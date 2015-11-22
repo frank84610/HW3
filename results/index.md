@@ -21,23 +21,36 @@ In this programming assignment, we will match SIFT keypoints from multiple image
 * Stitch multiple images together under a simplified case of real-world scenario ('MultipleStitch.m').
 
 ## Implementation
-1.Matching SIFT Descriptors (SIFTSimpleMatcher.m)
+1. Matching SIFT Descriptors (SIFTSimpleMatcher.m)
 
 First get the size of descriptors
 	
 	num1=size(descriptor1,1);
 	num2=size(descriptor2,1);
 	
-Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to get `d1_tmp`, which has same number of rows as descriptor2, with data in every rows are same as row"i" in descriptor1, then calculate the distance by `distance=sqrt(sum((d1_tmp-descriptor2).^2,2))`, then sort the `distance` and if the smallest value in distance is smaller than threshold(here is 0.7)*the next smallest distance, then save its information into `match` array.
+Then use a for loop to run through 1 to num1.In the loop, first use `repmat` to get `d1_tmp`, which has same number of rows as descriptor2, with data in every rows are same as row"i" in descriptor1, then calculate the distance by `distance=sqrt(sum((d1_tmp-descriptor2).^2,2))`. And then sort the `distance` , if the smallest value in `distance` is smaller than threshold(here is 0.7)*the next smallest value, save its information into `match` array.
 
-    for i=1:num1
-        d1_tmp=repmat(descriptor1(i,:), num2, 1);
-        distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
-        distance_tmp=sort(distance);
-        if distance_tmp(1)<thresh*distance_tmp(2)
-            match=[match; i, find(distance==distance_tmp(1))];
-        end
-    end
+	for i=1:num1
+		d1_tmp=repmat(descriptor1(i,:), num2, 1);
+		distance=sqrt(sum((d1_tmp-descriptor2).^2,2));
+		distance_tmp=sort(distance);
+		if distance_tmp(1)<thresh*distance_tmp(2)
+		match=[match; i, find(distance==distance_tmp(1))];
+		end
+	end
+
+2. Fitting the Transformation Matrix (ComputeAffineMatrix.m)
+
+First,convert the input points to homogeneous coordintes.
+
+	P1 = [Pt1';ones(1,N)];
+	P2 = [Pt2';ones(1,N)];
+
+Then by using `\`, we can get the transformation matrix `H`.
+
+	H = (P1'\P2')';
+
+3. RANSAC (RANSACFit.m)
 	
 ## Results
 
