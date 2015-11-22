@@ -163,24 +163,19 @@ function T = makeTransformToReferenceFrame(i_To_iPlusOne_Transform, currentFrame
 %   reference frame are not adjacent, T will need to be calculated.
 
 
-if refFrameIndex> currentFrameIndex
-    T=i_To_iPlusOne_Transform{currentFrameIndex};
+T=eye(3);
+
+while refFrameIndex> currentFrameIndex
+    T=i_To_iPlusOne_Transform{currentFrameIndex}*T;
     currentFrameIndex=currentFrameIndex+1;
-    while (refFrameIndex> currentFrameIndex)
-        T=i_To_iPlusOne_Transform{currentFrameIndex}*T;
-        currentFrameIndex=currentFrameIndex+1;
-    end
 end
 
-if currentFrameIndex> refFrameIndex
-    T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1});
+while currentFrameIndex> refFrameIndex
+    T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1})*T;
     currentFrameIndex=currentFrameIndex-1;
-    while (currentFrameIndex> refFrameIndex)
-        T=pinv(i_To_iPlusOne_Transform{currentFrameIndex-1})*T;
-        currentFrameIndex=currentFrameIndex-1;
-    end
 end
     
+
 
 % HINT 1: There are two separate cases to consider: currentFrameIndex <
 % refFrameIndex (this is the easier case), and currentFrameIndex >

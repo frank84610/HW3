@@ -85,11 +85,6 @@ function dists = ComputeError(H, pt1, pt2, match)
 %           match to the given transformation matrix.
 %           Error is measured as the Euclidean distance between (transformed pt1)
 %           and pt2 in homogeneous coordinates.
-    
-    N = size(match,1);
-    pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
-    dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
-
 
     % hint: If you have an array of indices, MATLAB can directly use it to
     % index into another array. For example, pt1(match(:, 1),:) returns a
@@ -98,6 +93,10 @@ function dists = ComputeError(H, pt1, pt2, match)
     % confusing, but understanding it will make your code simple and fast.)
     dists = zeros(size(match,1),1);
 
+    N = size(match,1);
+    pt1_conv=(H*([pt1(match(:, 1),:)';ones(1,N)]))';
+    dists=sqrt(sum((pt1_conv-[pt2(match(:, 2),:)';ones(1,N)]').^2,2));
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                              %
 %                                 END YOUR CODE                                %
