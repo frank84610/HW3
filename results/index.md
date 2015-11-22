@@ -90,7 +90,7 @@ In this programming assignment, we will match SIFT keypoints from multiple image
 ## Installation
 1. Download and unpack [VLFeat binary package](http://www.vlfeat.org/download.html)
 
-2. Enter `run('VLFEATROOT/toolbox/vl_setup')` in MATLAB command line
+2. Enter `run('VLFEATROOT/toolbox/vl_setup')` in MATLAB command line (VLFEATROOT is the path of VLFeat binary package)
 
 3. Download the code and open `StitchTester.m` , set the input image `('../data/yosemite*.jpg') ` and output path `'../results/yosemite.jpg'`then run the code .
 
