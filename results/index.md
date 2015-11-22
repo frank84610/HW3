@@ -84,50 +84,93 @@ And by the information of RBinary, we can plot the corners on the original figur
 
 2. Enter `run('VLFEATROOT/toolbox/vl_setup')` in MATLAB command line
 
-3. Download the code and open `StitchTester.m` ,set the input image `('../data/yosemite*.jpg') ` and output path `'../results/yosemite.jpg'`then run the code .
+3. Download the code and open `StitchTester.m` , set the input image `('../data/yosemite*.jpg') ` and output path `'../results/yosemite.jpg'`then run the code .
 	
 ## Results
 
-###House
 <table border=1>
 <tr>
 <td>
-<img src="../data/Im.jpg" width="40%"/>
-<img src="../results/Ixy.jpg"  width="40%"/>
-<img src="../results/corner1.jpg" width="70%"/>
+<img src="../data/Hanging1.png" width="30%"/>
+<img src="../data/Hanging2.png" width="30%"/>
+<img src="../results/Hanging.jpg" width="40%"/>
 </td>
 </tr>
 </table>
 
-###Chessboard
+
 <table border=2>
 <tr>
 <td>
-<img src="../data/chessboard.jpg" width="40%"/>
-<img src="../results/Ixy2.jpg"  width="40%"/>
-<img src="../results/corner2.jpg" width="70%"/>
+<img src="../data/MelakwaLake1.png" width="30%"/>
+<img src="../data/MelakwaLake2.png" width="30%"/>
+<img src="../results/MelakwaLake.jpg" width="50%"/>
 </td>
 </tr>
 </table>
 
-###Taipei 101
+
 <table border=3>
 <tr>
 <td>
-<img src="../data/101.jpg" width="30%"/>
-<img src="../results/Ixy3.jpg"  width="30%"/>
-<img src="../results/corner3.jpg" width="50%"/>
+<img src="../data/uttower1.jpg" width="30%"/>
+<img src="../data/uttower2.jpg" width="30%"/>
+<img src="../results/uttower_pano.jpg" width="50%"/>
 </td>
 </tr>
 </table>
 
-###Tennis Racquet
+
 <table border=4>
 <tr>
 <td>
-<img src="../data/Racquet.JPG" width="40%"/>
-<img src="../results/Ixy4.jpg"  width="40%"/>
-<img src="../results/corner4.jpg" width="70%"/>
+<img src="../data/yosemite1.jpg" width="30%"/>
+<img src="../data/yosemite2.jpg" width="30%"/>
+<img src="../data/yosemite3.jpg" width="30%"/>
+<img src="../data/yosemite4.jpg" width="30%"/>
+<img src="../results/yosemite.jpg" width="80%"/>
+</td>
+</tr>
+</table>
+
+
+<table border=5>
+<tr>
+<td>
+<img src="../data/Rainier1.png" width="30%"/>
+<img src="../data/Rainier2.png" width="30%"/>
+<img src="../data/Rainier3.png" width="30%"/>
+<img src="../data/Rainier4.png" width="30%"/>
+<img src="../data/Rainier5.png" width="30%"/>
+<img src="../data/Rainier6.png" width="30%"/>
+<img src="../results/Rainier.jpg" width="80%"/>
+</td>
+</tr>
+</table>
+
+
+<table border=6>
+<tr>
+<td>
+<img src="../data/desktop.jpg" width="30%"/>
+<img src="../data/desktop2.png" width="30%"/>
+<img src="../data/desktop3.png" width="30%"/>
+<img src="../results/desktop.jpg" width="80%"/>
+</td>
+</tr>
+</table>
+
+<table border=7>
+<tr>
+<td>
+<img src="../data/landscape1.jpg width="30%"/>
+<img src="../data/landscape2.jpg width="30%"/>
+<img src="../data/landscape3.jpg width="30%"/>
+<img src="../data/landscape4.jpg width="30%"/>
+<img src="../data/landscape5.jpg width="30%"/>
+<img src="../data/landscape6.jpg width="30%"/>
+<img src="../data/landscape7.jpg width="30%"/>
+<img src="../results/landscape.jpg" width="100%"/>
 </td>
 </tr>
 </table>
